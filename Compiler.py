@@ -15,14 +15,15 @@ for line in data.split('\n'):
             #print value
             try:
                 int(value)+1
-                print "int"
+                # "int"
                 constants.extend([value])
             except:
                 if value.isalpha() == True:
-                    print "Var"
+                    # "Var"
                     variables.extend([value])
                 else:
-                    print "Command"
+                    pass
+                    # "Command"
 constants = list(set(constants))
 variables = list(set(variables))
 memery = constants
@@ -33,3 +34,24 @@ with open(filename_start+"_mem.txt", "w") as file:
         file.write(memery_part+"\n")
     file.close()
 
+
+line_number = -1
+program = ""
+for line in data.split('\n'):
+    line_number = line_number+1
+    if line_number > 1:
+        line_parts = line.split(' ')
+        command,values = line_parts
+        program = program + command,
+        for value in values.split(','):
+            try:
+                int(value)+1
+                program = program + str(bin(memery.index(value))),
+            except:
+                if value.isalpha() == True:
+                    program = program + str(bin(memery.index(value))),
+                else:
+                    program = program + value,
+            program = program + ",",
+        program = program + ""
+print program
