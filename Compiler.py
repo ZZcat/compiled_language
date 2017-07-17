@@ -1,4 +1,5 @@
 filename = "a.txt"
+filename_start,trash = filename.split('.')
 file = open(filename, "r") 
 data = file.read()
 file.close()
@@ -11,7 +12,7 @@ for line in data.split('\n'):
         line_parts = line.split(' ')
         command,values = line_parts
         for value in values.split(','):
-            print value
+            #print value
             try:
                 int(value)+1
                 print "int"
@@ -22,5 +23,8 @@ for line in data.split('\n'):
                     variables.extend([value])
                 else:
                     print "Command"
-print list(set(constants)
-print list(set(variables)
+constants = list(set(constants))
+variables = list(set(variables))
+memery = constants
+memery.extend(variables)
+print memery
