@@ -28,3 +28,8 @@ variables = list(set(variables))
 memery = constants
 memery.extend(variables)
 print memery
+with open(filename_start+"_mem.txt", "w") as file:
+    for memery_part in memery:
+        file.write(memery_part+"\n")
+    file.close()
+
