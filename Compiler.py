@@ -1,5 +1,6 @@
+print "Starting"
 filename = "a.txt"
-filename_start,trash = filename.split('.')
+filename_start = filename.split('.')[0]
 file = open(filename, "r") 
 data = file.read()
 file.close()
@@ -7,26 +8,29 @@ line_number = -1
 constants = []
 variables = []
 for line in data.split('\n'):
-    line_number = line_number+1
-    if line_number > 1:
-        line_parts = line.split(' ')
-        command,values = line_parts
-        if 1 == 0:
-            pass
-        else:
-            for value in values.split(','):
-                #print value
-                try:
-                    int(value)+1
-                    # "int"
-                    constants.extend([value])
-                except:
-                    if value.isalpha() == True:
-                        # "Var"
-                        variables.extend([value])
-                    else:
-                        pass
-                        # "Command"
+    try:
+        line_number = line_number+1
+        if line_number > 1:
+            line_parts = line.split(' ')
+            command,values = line_parts
+            if 1 == 0:
+                pass
+            else:
+                for value in values.split(','):
+                    #print value
+                    try:
+                        int(value)+1
+                        # "int"
+                        constants.extend([value])
+                    except:
+                        if value.isalpha() == True:
+                            # "Var"
+                            variables.extend([value])
+                        else:
+                            pass
+                            # "Command"
+    except:
+        pass
 constants = list(set(constants))
 variables = list(set(variables))
 memery = constants
@@ -40,39 +44,42 @@ with open(filename_start+"_mem.txt", "w") as file:
 line_number = -1
 program = ""
 for line in data.split('\n'):
-    line_number = line_number+1
-    if line_number > 1:
-        line_parts = line.split(' ')
-        command,values = line_parts
-        if command.lower() == "setv":
-            file = open(filename_start+"_mem.txt", "r+") 
-            data = file.read()
-            data_new=""
-            for data_replace in data.split('\n'):
+    try:
+        line_number = line_number+1
+        if line_number > 1:
+            line_parts = line.split(' ')
+            command,values = line_parts
+            if command.lower() == "setv":
+                file = open(filename_start+"_mem.txt", "r+") 
+                data = file.read()
+                data_new=""
+                for data_replace in data.split('\n'):
 
-                if data_replace == values[0]:
-                    data_new = data_new + values[2]
-                else:
-                    data_new = data_new + data_replace
-                data_new = data_new + "\n"
-            file.seek(0)
-            file.truncate()
-            file.write(data_new)
-            file.close()
-        else:
-            program = program + command
-            program = program + " "
-            for value in values.split(','):
-                try:
-                    int(value)+1
-                    program = program + ("{0:b}".format((memery.index(value))))
-                except:
-                    if value.isalpha() == True:
-                        program = program + ("{0:b}".format(memery.index(value)))
+                    if data_replace == values[0]:
+                        data_new = data_new + values[2]
                     else:
-                        program = program + value
-                program = program + ","
-            program = program + "\n"
+                        data_new = data_new + data_replace
+                    data_new = data_new + "\n"
+                file.seek(0)
+                file.truncate()
+                file.write(data_new)
+                file.close()
+            else:
+                program = program + command
+                program = program + " "
+                for value in values.split(','):
+                    try:
+                        int(value)+1
+                        program = program + ("{0:b}".format((memery.index(value))))
+                    except:
+                        if value.isalpha() == True:
+                            program = program + ("{0:b}".format(memery.index(value)))
+                        else:
+                            program = program + value
+                    program = program + ","
+                program = program + "\n"
+    except:
+        pass
 file = open(filename_start+"_mem.txt", "r+") 
 data = file.read()
 data_new = ""
@@ -97,6 +104,10 @@ print program_new
 print "\n\n"
 linecount = 0
 line_number = 1
+file = open(filename_start+"_asm.txt", "w+") 
+data = file.read()
+file.seek(0)
+file.truncate()
 for line in program_new.split('\n'):
     line_number = line_number+1
     address = "{0:b}".format(line_number)
@@ -107,73 +118,114 @@ for line in program_new.split('\n'):
             command = command.lower()
             print command
             if command == "add":
-                print "0110 0000"
-                print "0010", (values.split(',')[0]).zfill(4) 
+                file.write("0110 0000")
+                file.write("\n")
+                print 2
+                file.write("0010 "+ (values.split(',')[0]).zfill(4) )
+                file.write("\n")
+                print 3
                 abc= (values.split(',')[0])
-                print "0011", (values.split(',')[1]).zfill(4)
-                print "0100", (values.split(',')[2]).zfill(4)
+                print 99
+                file.write("0011 "+ (values.split(',')[1]).zfill(4))
+                print 88
+                file.write("\n")
+                print 4
+                file.write("0100 "+ (values.split(',')[2]).zfill(4))
+                file.write("\n")
+                print 5
                 linecount = linecount + 4
             elif command == "sub":
-                print "0110 0001"
-                print "0010", (values.split(',')[0]).zfill(4) 
+                file.write("0110 0001")
+                file.write("\n")
+                file.write("0010", (values.split(',')[0]).zfill(4) )
+                file.write("\n")
                 abc= (values.split(',')[0])
-                print "0011", (values.split(',')[1]).zfill(4)
-                print "0100", (values.split(',')[2]).zfill(4)
+                file.write("0011", (values.split(',')[1]).zfill(4))
+                file.write("\n")
+                file.write("0100", (values.split(',')[2]).zfill(4))
+                file.write("\n")
                 linecount = linecount + 4
             elif command == "stop":
-                print "0000 0000"
+                file.write("0000 0000")
+                file.write("\n")
                 linecount = linecount + 1
             elif command == "while":
                 while_values = values.split(',')
-                print while_values
-                print values
                 while_address = "{0:b}".format(linecount+1)
                 linecount = linecount + 0
             elif command == "whileend":
                 if while_values[1] == "=":
                     if 1==1:
                         if while_values[2] == 0:
-                            print "0010 "+ while_values[0].zfill(4)
-                            print "1000 "+ while_address.zfill(4)
+                            file.write("0010 "+ while_values[0].zfill(4))
+                            file.write("\n")
+                            file.write("1000 "+ while_address.zfill(4))
+                            file.write("\n")
                         else:
-                            print "0110 0001"
-                            print "0010 "+ while_values[0].zfill(4)
-                            print "0011 "+ while_values[0].zfill(4)
-                            print "0101 0000"
-                            print "1000 "+ while_address.zfill(4)
+                            file.write("0110 0001")
+                            file.write("\n")
+                            file.write("0010 "+ while_values[0].zfill(4))
+                            file.write("\n")
+                            file.write("0011 "+ while_values[0].zfill(4))
+                            file.write("\n")
+                            file.write("0101 0000")
+                            file.write("\n")
+                            file.write("1000 "+ while_address.zfill(4))
+                            file.write("\n")
                 if while_values[1] == "=!":
                     if 1==1:
                         if while_values[2] == 0:
-                            print "0010 "+ while_values[0].zfill(4)
-                            print "1001 "+ while_address.zfill(4)
+                            file.write("0010 "+ while_values[0].zfill(4))
+                            file.write("\n")
+                            file.write("1001 "+ while_address.zfill(4))
+                            file.write("\n")
                         else:
-                            print "0110 0001"
-                            print "0010 "+ while_values[0].zfill(4)
-                            print "0011 "+ while_values[0].zfill(4)
-                            print "0101 0000"
-                            print "1001 "+ while_address.zfill(4)
+                            file.write("0110 0001")
+                            file.write("\n")
+                            file.write("0010 "+ while_values[0].zfill(4))
+                            file.write("\n")
+                            file.write("0011 "+ while_values[0].zfill(4))
+                            file.write("\n")
+                            file.write("0101 0000")
+                            file.write("\n")
+                            file.write("1001 "+ while_address.zfill(4))
+                            file.write("\n")
                 if while_values[1] == ">":
                     if 1==1:
                         if while_values[2] == 0:
-                            print "0010 "+ while_values[0].zfill(4)
-                            print "1010 "+ while_address.zfill(4)
+                            file.write("0010 "+ while_values[0].zfill(4))
+                            file.write("\n")
+                            file.write("1010 "+ while_address.zfill(4))
+                            file.write("\n")
                         else:
-                            print "0110 0001"
-                            print "0010 "+ while_values[0].zfill(4)
-                            print "0011 "+ while_values[0].zfill(4)
-                            print "0101 0000"
-                            print "1010 "+ while_address.zfill(4)
+                            file.write("0110 0001")
+                            file.write("\n")
+                            file.write("0010 "+ while_values[0].zfill(4))
+                            file.write("\n")
+                            file.write("0011 "+ while_values[0].zfill(4))
+                            file.write("\n")
+                            file.write("0101 0000")
+                            file.write("\n")
+                            file.write("1010 "+ while_address.zfill(4))
+                            file.write("\n")
                 if while_values[1] == "<":
                     if 1==1:
                         if while_values[2] == 0:
-                            print "0010 "+ while_values[0].zfill(4)
-                            print "1011 "+ while_address.zfill(4)
+                            file.write("0010 "+ while_values[0].zfill(4))
+                            file.write("\n")
+                            file.write("1011 "+ while_address.zfill(4))
+                            file.write("\n")
                         else:
-                            print "0110 0001"
-                            print "0010 "+ while_values[0].zfill(4)
-                            print "0011 "+ while_values[0].zfill(4)
-                            print "0101 0000"
-                            print "1011 "+ while_address.zfill(4)
+                            file.write("0110 0001")
+                            file.write("\n")
+                            file.write("0010 "+ while_values[0].zfill(4))
+                            file.write("\n")
+                            file.write("0011 "+ while_values[0].zfill(4))
+                            file.write("\n")
+                            file.write("0101 0000")
+                            file.write("\n")
+                            file.write("1011 "+ while_address.zfill(4))
+                            file.write("\n")
                 
 
             elif command == "forever":
@@ -184,21 +236,27 @@ for line in program_new.split('\n'):
                 linecount = linecount + 0
             elif command == "out":
                 for value in values.split(','):
-                    print "0010 "+value.zfill(4)
-                print "0111 0000"
+                    file.write("0010 "+value.zfill(4))
+                    file.write("\n")
+                file.write("0111 0000")
+                file.write("\n")
                 linecount = linecount + 2
             elif command == "clear":
-                print "0111 0011"
+                file.write("0111 0011")
+                file.write("\n")
                 linecount = linecount + 1
             elif command == "set":
                 values = values.split(',')
-                print "0010 "+values[0].zfill(4)
-                print "0100 "+values[1].zfill(4)
+                file.write("0010 "+values[0].zfill(4))
+                file.write("\n")
+                file.write("0100 "+values[1].zfill(4))
+                file.write("\n")
                 linecount = linecount + 2
             else:
                 print "----UNKNOWN----"
         except:
             print "--"
             pass #empty line
-        
+file.close()
+
         

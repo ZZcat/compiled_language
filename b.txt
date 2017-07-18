@@ -1,3 +1,0 @@
-FILENAME b.txt
-This is a file
-With 3 lines

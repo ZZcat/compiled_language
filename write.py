@@ -1,4 +1,5 @@
 from Tkinter import *
+import os
 
 def save():
     data = text_area.get("1.0",END)
@@ -10,7 +11,10 @@ def save():
             file.write(line)
         file.close()
     result.set('Lines: '+str(len(data.split('\n'))-1)+" Filename: " + filename)
-
+    file = open("compile.txt", "w") 
+    file.write(filename)
+    file.close()
+    import Compiler
 def fileopen():
     data = text_area.get("1.0",END)
     filename = data.split('\n', 1)[0]
