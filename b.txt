@@ -1,4 +1,4 @@
-FILENAME a.txt
+FILENAME b.txt
 
 CLEAR 
 SETV A,0

@@ -14,7 +14,7 @@ def save():
     file = open("compile.txt", "w") 
     file.write(filename)
     file.close()
-    import Compiler
+    print os.system("python Compiler.py")
 def fileopen():
     data = text_area.get("1.0",END)
     filename = data.split('\n', 1)[0]
