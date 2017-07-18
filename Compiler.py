@@ -93,66 +93,112 @@ file.close()
 program_new = ""
 for program_line in program.split('\n'):
     program_new = program_new+program_line[:-1]+"\n"
-
-line_number = -1
+print program_new
+print "\n\n"
+linecount = 0
+line_number = 1
 for line in program_new.split('\n'):
     line_number = line_number+1
     address = "{0:b}".format(line_number)
-    print address.zfill(4)+": ",
     if line_number > 1:
         try:
             line_parts = line.split(' ')
             command,values = line_parts
             command = command.lower()
+            print command
             if command == "add":
                 print "0110 0000"
                 print "0010", (values.split(',')[0]).zfill(4) 
                 abc= (values.split(',')[0])
                 print "0011", (values.split(',')[1]).zfill(4)
                 print "0100", (values.split(',')[2]).zfill(4)
+                linecount = linecount + 4
             elif command == "sub":
                 print "0110 0001"
                 print "0010", (values.split(',')[0]).zfill(4) 
                 abc= (values.split(',')[0])
                 print "0011", (values.split(',')[1]).zfill(4)
                 print "0100", (values.split(',')[2]).zfill(4)
+                linecount = linecount + 4
             elif command == "stop":
                 print "0000 0000"
+                linecount = linecount + 1
             elif command == "while":
                 while_values = values.split(',')
-                while_address = address
+                print while_values
+                print values
+                while_address = "{0:b}".format(linecount+1)
+                linecount = linecount + 0
             elif command == "whileend":
-                if while_value[1] == "=":
-                    if while_values[2].isalpha()==True:
-                        pass # var
-                    else:
+                if while_values[1] == "=":
+                    if 1==1:
                         if while_values[2] == 0:
-                            print "0010 ", while_values[0].zfill(4)
-                            print "1000 ", while_address
+                            print "0010 "+ while_values[0].zfill(4)
+                            print "1000 "+ while_address.zfill(4)
                         else:
-                            pass # int
-                if while_value[1] == "=!":
-                    pass
-                if while_value[1] == ">":
-                    pass
-                if while_value[1] == "<":
-                    pass
+                            print "0110 0001"
+                            print "0010 "+ while_values[0].zfill(4)
+                            print "0011 "+ while_values[0].zfill(4)
+                            print "0101 0000"
+                            print "1000 "+ while_address.zfill(4)
+                if while_values[1] == "=!":
+                    if 1==1:
+                        if while_values[2] == 0:
+                            print "0010 "+ while_values[0].zfill(4)
+                            print "1001 "+ while_address.zfill(4)
+                        else:
+                            print "0110 0001"
+                            print "0010 "+ while_values[0].zfill(4)
+                            print "0011 "+ while_values[0].zfill(4)
+                            print "0101 0000"
+                            print "1001 "+ while_address.zfill(4)
+                if while_values[1] == ">":
+                    if 1==1:
+                        if while_values[2] == 0:
+                            print "0010 "+ while_values[0].zfill(4)
+                            print "1010 "+ while_address.zfill(4)
+                        else:
+                            print "0110 0001"
+                            print "0010 "+ while_values[0].zfill(4)
+                            print "0011 "+ while_values[0].zfill(4)
+                            print "0101 0000"
+                            print "1010 "+ while_address.zfill(4)
+                if while_values[1] == "<":
+                    if 1==1:
+                        if while_values[2] == 0:
+                            print "0010 "+ while_values[0].zfill(4)
+                            print "1011 "+ while_address.zfill(4)
+                        else:
+                            print "0110 0001"
+                            print "0010 "+ while_values[0].zfill(4)
+                            print "0011 "+ while_values[0].zfill(4)
+                            print "0101 0000"
+                            print "1011 "+ while_address.zfill(4)
                 
+
             elif command == "forever":
                 pass
+                linecount = linecount + 0
             elif command == "if":
                 pass
+                linecount = linecount + 0
             elif command == "out":
                 for value in values.split(','):
-                    print "0010 ",value.zfill(4)
+                    print "0010 "+value.zfill(4)
                 print "0111 0000"
+                linecount = linecount + 2
             elif command == "clear":
                 print "0111 0011"
+                linecount = linecount + 1
             elif command == "set":
-                pass
+                values = values.split(',')
+                print "0010 "+values[0].zfill(4)
+                print "0100 "+values[1].zfill(4)
+                linecount = linecount + 2
             else:
                 print "----UNKNOWN----"
         except:
+            print "--"
             pass #empty line
         
         
