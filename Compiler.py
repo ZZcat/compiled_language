@@ -1,5 +1,9 @@
 print "Starting"
-filename = "a.txt"
+
+file = open("compile.txt", "r") 
+filename = file.read()
+file.close()
+
 filename_start = filename.split('.')[0]
 file = open(filename, "r") 
 data = file.read()

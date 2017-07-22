@@ -14,7 +14,13 @@ def save():
     file = open("compile.txt", "w") 
     file.write(filename)
     file.close()
-    print os.system("python Compiler.py")
+    file = open("compile_done.txt", "w") 
+    file.write(0)
+    file.close()
+    os.system("python Compiler.py")
+    file = open("compile_done.txt", "r") 
+    print file.read()
+    file.close()
 def fileopen():
     data = text_area.get("1.0",END)
     filename = data.split('\n', 1)[0]
