@@ -112,6 +112,10 @@ file = open(filename_start+"_asm.txt", "w+")
 data = file.read()
 file.seek(0)
 file.truncate()
+
+loop_values=[]
+loop_addresses=[]
+
 for line in program_new.split('\n'):
     line_number = line_number+1
     address = "{0:b}".format(line_number)
@@ -154,81 +158,82 @@ for line in program_new.split('\n'):
                 file.write("\n")
                 linecount = linecount + 1
             elif command == "while":
-                while_values = values.split(',')
-                while_address = "{0:b}".format(linecount+1)
+                loop_values = loop_values + [values.split(',')]
+                loop_addresses = loop_addresses + ["{0:b}".format(linecount+1)]
                 linecount = linecount + 0
+
             elif command == "whileend":
-                if while_values[1] == "=":
+                if loop_values[-1][1] == "=":
                     if 1==1:
-                        if while_values[2] == 0:
-                            file.write("0010 "+ while_values[0].zfill(4))
+                        if loop_values[-1][2] == 0:
+                            file.write("0010 "+ loop_values[-1][0].zfill(4))
                             file.write("\n")
-                            file.write("1000 "+ while_address.zfill(4))
+                            file.write("1000 "+ loop_addresses[-1].zfill(4))
                             file.write("\n")
                         else:
                             file.write("0110 0001")
                             file.write("\n")
-                            file.write("0010 "+ while_values[0].zfill(4))
+                            file.write("0010 "+ loop_values[-1][0].zfill(4))
                             file.write("\n")
-                            file.write("0011 "+ while_values[0].zfill(4))
+                            file.write("0011 "+ loop_values[-1][0].zfill(4))
                             file.write("\n")
                             file.write("0101 0000")
                             file.write("\n")
-                            file.write("1000 "+ while_address.zfill(4))
+                            file.write("1000 "+ loop_addresses[-1].zfill(4))
                             file.write("\n")
-                if while_values[1] == "=!":
+                if loop_values[-1][1] == "=!":
                     if 1==1:
-                        if while_values[2] == 0:
-                            file.write("0010 "+ while_values[0].zfill(4))
+                        if loop_values[-1][2] == 0:
+                            file.write("0010 "+ loop_values[-1][0].zfill(4))
                             file.write("\n")
-                            file.write("1001 "+ while_address.zfill(4))
+                            file.write("1001 "+ loop_addresses[-1].zfill(4))
                             file.write("\n")
                         else:
                             file.write("0110 0001")
                             file.write("\n")
-                            file.write("0010 "+ while_values[0].zfill(4))
+                            file.write("0010 "+ loop_values[-1][0].zfill(4))
                             file.write("\n")
-                            file.write("0011 "+ while_values[0].zfill(4))
+                            file.write("0011 "+ loop_values[-1][0].zfill(4))
                             file.write("\n")
                             file.write("0101 0000")
                             file.write("\n")
-                            file.write("1001 "+ while_address.zfill(4))
+                            file.write("1001 "+ loop_addresses[-1].zfill(4))
                             file.write("\n")
-                if while_values[1] == ">":
+                if loop_values[-1][1] == ">":
                     if 1==1:
-                        if while_values[2] == 0:
-                            file.write("0010 "+ while_values[0].zfill(4))
+                        if loop_values[-1][2] == 0:
+                            file.write("0010 "+ loop_values[-1][0].zfill(4))
                             file.write("\n")
-                            file.write("1010 "+ while_address.zfill(4))
+                            file.write("1010 "+ loop_addresses[-1].zfill(4))
                             file.write("\n")
                         else:
                             file.write("0110 0001")
                             file.write("\n")
-                            file.write("0010 "+ while_values[0].zfill(4))
+                            file.write("0010 "+ loop_values[-1][0].zfill(4))
                             file.write("\n")
-                            file.write("0011 "+ while_values[0].zfill(4))
+                            file.write("0011 "+ loop_values[-1][0].zfill(4))
                             file.write("\n")
                             file.write("0101 0000")
                             file.write("\n")
-                            file.write("1010 "+ while_address.zfill(4))
+                            file.write("1010 "+ loop_addresses[-1].zfill(4))
                             file.write("\n")
-                if while_values[1] == "<":
+                if loop_values[-1][1] == "<":
                     if 1==1:
-                        if while_values[2] == 0:
-                            file.write("0010 "+ while_values[0].zfill(4))
+                        if loop_values[-1][2] == 0:
+                            file.write("0010 "+ loop_values[-1][0].zfill(4))
                             file.write("\n")
-                            file.write("1011 "+ while_address.zfill(4))
+                            file.write("1011 "+ loop_addresses[-1].zfill(4))
                             file.write("\n")
                         else:
                             file.write("0110 0001")
                             file.write("\n")
-                            file.write("0010 "+ while_values[0].zfill(4))
+                            file.write("0010 "+ loop_values[-1][0].zfill(4))
                             file.write("\n")
-                            file.write("0011 "+ while_values[0].zfill(4))
+                            file.write("0011 "+ loop_values[-1][0].zfill(4))
                             file.write("\n")
                             file.write("0101 0000")
                             file.write("\n")
-                            file.write("1011 "+ while_address.zfill(4))
+                            file.write("1011 "+ loop_addresses[-1].zfill(4))
                             file.write("\n")
                 
 
