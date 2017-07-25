@@ -15,7 +15,7 @@ def save():
     file.write(filename)
     file.close()
     file = open("compile_done.txt", "w") 
-    file.write(0)
+    file.write("0")
     file.close()
     os.system("python Compiler.py")
     file = open("compile_done.txt", "r") 

@@ -166,14 +166,14 @@ for line in program_new.split('\n'):
                 if loop_values[-1][1] == "=":
                     if 1==1:
                         if loop_values[-1][2] == 0:
-                            file.write("0010 "+ loop_values[-1][0].zfill(4))
+                            file.write("0010 "+ loop_values[-1][2].zfill(4))
                             file.write("\n")
                             file.write("1000 "+ loop_addresses[-1].zfill(4))
                             file.write("\n")
                         else:
                             file.write("0110 0001")
                             file.write("\n")
-                            file.write("0010 "+ loop_values[-1][0].zfill(4))
+                            file.write("0010 "+ loop_values[-1][2].zfill(4))
                             file.write("\n")
                             file.write("0011 "+ loop_values[-1][0].zfill(4))
                             file.write("\n")
@@ -184,14 +184,14 @@ for line in program_new.split('\n'):
                 if loop_values[-1][1] == "=!":
                     if 1==1:
                         if loop_values[-1][2] == 0:
-                            file.write("0010 "+ loop_values[-1][0].zfill(4))
+                            file.write("0010 "+ loop_values[-1][2].zfill(4))
                             file.write("\n")
                             file.write("1001 "+ loop_addresses[-1].zfill(4))
                             file.write("\n")
                         else:
                             file.write("0110 0001")
                             file.write("\n")
-                            file.write("0010 "+ loop_values[-1][0].zfill(4))
+                            file.write("0010 "+ loop_values[-1][2].zfill(4))
                             file.write("\n")
                             file.write("0011 "+ loop_values[-1][0].zfill(4))
                             file.write("\n")
@@ -202,14 +202,12 @@ for line in program_new.split('\n'):
                 if loop_values[-1][1] == ">":
                     if 1==1:
                         if loop_values[-1][2] == 0:
-                            file.write("0010 "+ loop_values[-1][0].zfill(4))
-                            file.write("\n")
-                            file.write("1010 "+ loop_addresses[-1].zfill(4))
+
                             file.write("\n")
                         else:
                             file.write("0110 0001")
                             file.write("\n")
-                            file.write("0010 "+ loop_values[-1][0].zfill(4))
+                            file.write("0010 "+ loop_values[-1][2].zfill(4))
                             file.write("\n")
                             file.write("0011 "+ loop_values[-1][0].zfill(4))
                             file.write("\n")
@@ -220,14 +218,15 @@ for line in program_new.split('\n'):
                 if loop_values[-1][1] == "<":
                     if 1==1:
                         if loop_values[-1][2] == 0:
-                            file.write("0010 "+ loop_values[-1][0].zfill(4))
+                            file.write("0010 "+ loop_values[-1][2].zfill(4))
                             file.write("\n")
                             file.write("1011 "+ loop_addresses[-1].zfill(4))
                             file.write("\n")
                         else:
+                            print "$$$$"
                             file.write("0110 0001")
                             file.write("\n")
-                            file.write("0010 "+ loop_values[-1][0].zfill(4))
+                            file.write("0010 "+ loop_values[-1][2].zfill(4))
                             file.write("\n")
                             file.write("0011 "+ loop_values[-1][0].zfill(4))
                             file.write("\n")

@@ -1,4 +1,4 @@
-FILENAME a.txt
+FILENAME c.txt
 
 CLEAR 
 SETV A,0
@@ -10,3 +10,6 @@ SET B,C
 OUT A
 WHILEEND 
 STOP 
+asdf
+
+
