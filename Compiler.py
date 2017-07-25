@@ -251,9 +251,9 @@ for line in program_new.split('\n'):
                 linecount = linecount + 1
             elif command == "set":
                 values = values.split(',')
-                file.write("0010 "+values[0].zfill(4))
-                file.write("\n")
                 file.write("0100 "+values[1].zfill(4))
+                file.write("\n")
+                file.write("0010 "+values[0].zfill(4))
                 file.write("\n")
                 linecount = linecount + 2
             else:
