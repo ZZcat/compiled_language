@@ -58,7 +58,7 @@ for line in data.split('\n'):
                 change_set_loop = change_set_loop + 1
             elif command.lower() == "endloop":
                 change_set_loop = change_set_loop -1
-            elif command.lower() == "set" and change_set_loop==0:
+            if command.lower() == "set" and change_set_loop==0:
                 try:
                     trash = values[0] + 1 # Check if set is not string to tring
                     trash = values[1] + 1 # *
