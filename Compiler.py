@@ -48,6 +48,7 @@ with open(filename_start+"_mem.txt", "w") as file:
 line_number = -1
 program = ""
 change_set_loop = 0
+print data
 for line in data.split('\n'):
     try:
         line_number = line_number+1
