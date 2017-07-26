@@ -9,3 +9,4 @@ file = open(filename, "r")
 data = file.read()
 file.close()
        
+print filename_start+"_asm.txt"

@@ -47,27 +47,36 @@ with open(filename_start+"_mem.txt", "w") as file:
 
 line_number = -1
 program = ""
+change_set_loop = 0
 for line in data.split('\n'):
     try:
         line_number = line_number+1
         if line_number > 1:
             line_parts = line.split(' ')
             command,values = line_parts
-            if command.lower() == "setv":
-                file = open(filename_start+"_mem.txt", "r+") 
-                data = file.read()
-                data_new=""
-                for data_replace in data.split('\n'):
+            if command.lower() == "while" or command.lower() == "if":
+                change_set_loop = change_set_loop + 1
+            elif command.lower() == "endloop":
+                change_set_loop = change_set_loop -1
+            elif command.lower() == "set" and change_set_loop==0:
+                try:
+                    trash = values[0] + 1 # Check if set is not string to tring
+                    trash = values[1] + 1 # *
+                except:
+                    file = open(filename_start+"_mem.txt", "r+") 
+                    data = file.read()
+                    data_new=""
+                    for data_replace in data.split('\n'):
 
-                    if data_replace == values[0]:
-                        data_new = data_new + values[2]
-                    else:
-                        data_new = data_new + data_replace
-                    data_new = data_new + "\n"
-                file.seek(0)
-                file.truncate()
-                file.write(data_new)
-                file.close()
+                        if data_replace == values[0]:
+                            data_new = data_new + values[2]
+                        else:
+                            data_new = data_new + data_replace
+                        data_new = data_new + "\n"
+                    file.seek(0)
+                    file.truncate()
+                    file.write(data_new)
+                    file.close()
             else:
                 program = program + command
                 program = program + " "
@@ -162,7 +171,7 @@ for line in program_new.split('\n'):
                 loop_addresses = loop_addresses + ["{0:b}".format(linecount+1)]
                 linecount = linecount + 0
 
-            elif command == "whileend":
+            elif command == "endloop":
                 if loop_values[-1][1] == "=":
                     if 1==1:
                         if loop_values[-1][2] == 0:
@@ -255,9 +264,9 @@ for line in program_new.split('\n'):
                 linecount = linecount + 1
             elif command == "set":
                 values = values.split(',')
-                file.write("0100 "+values[1].zfill(4))
-                file.write("\n")
                 file.write("0010 "+values[0].zfill(4))
+                file.write("\n")
+                file.write("0100 "+values[1].zfill(4))
                 file.write("\n")
                 linecount = linecount + 2
             else:
