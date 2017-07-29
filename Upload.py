@@ -9,7 +9,7 @@ write_wait = 0.5
 signal_wait = 0.1
 
 print "Connecting to Device"
-bluetoothSerial = serial.Serial( "/dev/tty.zz-DevB", baudrate=9600 )
+bluetoothSerial = serial.Serial("/dev/tty.zz-DevB", baudrate=9600 )
 def b(write_data_def):
     bluetoothSerial.write(str(write_data_def))
     time.sleep(signal_wait)
@@ -65,55 +65,16 @@ for line_bit in data:
             b("a") # Data Clock fall
         bit = bit + 1
     except:
-        pass # Non-int
+        pass
     if bit == 8:
+        print address
         b("n") # Enable data
         time.sleep(write_wait)
         b("m") # Disable data
         address = address + 1
         bit = 0
         address_bits = ("{0:b}".format(address)).zfill(8)
-        if int(address_bits[0])==0:
-            b("g")
-            b("f")
-            b("e")
-        else:
-            b("h")
-            b("f")
-            b("e")
-        if int(address_bits[1])==0:
-            b("g")
-            b("f")
-            b("e")
-        else:
-            b("h")
-            b("f")
-            b("e")
-        if int(address_bits[2])==0:
-            b("g")
-            b("f")
-            b("e")
-        else:
-            b("h")
-            b("f")
-            b("e")
-        if int(address_bits[3])==0:
-            b("g")
-            b("f")
-            b("e")
-        else:
-            b("h")
-            b("f")
-            b("e")
-        if int(address_bits[4])==0:
-            b("g")
-            b("f")
-            b("e")
-        else:
-            b("h")
-            b("f")
-            b("e")
-        if int(address_bits[5])==0:
+        if int(address_bits[7])==0:
             b("g")
             b("f")
             b("e")
@@ -129,14 +90,54 @@ for line_bit in data:
             b("h")
             b("f")
             b("e")
-        if int(address_bits[7])==0:
+        if int(address_bits[5])==0:
             b("g")
             b("f")
             b("e")
         else:
             b("h")
             b("f")
-        
+            b("e")
+        if int(address_bits[4])==0:
+            b("g")
+            b("f")
+            b("e")
+        else:
+            b("h")
+            b("f")
+            b("e")
+        if int(address_bits[3])==0:
+            b("g")
+            b("f")
+            b("e")
+        else:
+            b("h")
+            b("f")
+            b("e")
+        if int(address_bits[2])==0:
+            b("g")
+            b("f")
+            b("e")
+        else:
+            b("h")
+            b("f")
+            b("e")
+        if int(address_bits[1])==0:
+            b("g")
+            b("f")
+            b("e")
+        else:
+            b("h")
+            b("f")
+            b("e")
+        if int(address_bits[0])==0:
+            b("g")
+            b("f")
+            b("e")
+        else:
+            b("h")
+            b("f")
+        print str(address_bits)+"\n"
             
 ## Memory
 b("jk")
