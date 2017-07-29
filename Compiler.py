@@ -35,8 +35,10 @@ for line in data.split('\n'):
                             # "Command"
     except:
         pass
+print variables
 constants = list(set(constants))
 variables = list(set(variables))
+print variables
 memery = constants
 memery.extend(variables)
 with open(filename_start+"_mem.txt", "w") as file:
@@ -244,6 +246,9 @@ for line in program_new.split('\n'):
                             file.write("\n")
                             file.write("1011 "+ loop_addresses[-1].zfill(4))
                             file.write("\n")
+                print loop_values
+                del loop_values[-1]
+                del loop_addresses[-1]
                 
 
             elif command == "forever":
