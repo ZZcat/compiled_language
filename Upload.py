@@ -1,18 +1,24 @@
 #! /usr/bin/python
 
 print "Loading..."
-import serial
+import serial , time
 from time import sleep
 print "Done.\n"
+
+write_wait = 0.5
+signal_wait = 0.1
 
 print "Connecting to Device"
 bluetoothSerial = serial.Serial( "/dev/tty.zz-DevB", baudrate=9600 )
 def b(write_data_def):
     bluetoothSerial.write(str(write_data_def))
+    time.sleep(signal_wait)
 print "Done.\n"
 print "Setting output to low"
 b(str("acegikm"))
 print "Done.\n"
+
+
 #0 1
 
 #a b  data_clk
@@ -62,11 +68,12 @@ for line_bit in data:
         pass # Non-int
     if bit == 8:
         b("n") # Enable data
+        time.sleep(write_wait)
         b("m") # Disable data
         address = address + 1
         bit = 0
         address_bits = ("{0:b}".format(address)).zfill(8)
-        if address_bit[0]==0:
+        if int(address_bits[0])==0:
             b("g")
             b("f")
             b("e")
@@ -74,7 +81,7 @@ for line_bit in data:
             b("h")
             b("f")
             b("e")
-        if address_bit[1]==0:
+        if int(address_bits[1])==0:
             b("g")
             b("f")
             b("e")
@@ -82,7 +89,7 @@ for line_bit in data:
             b("h")
             b("f")
             b("e")
-        if address_bit[2]==0:
+        if int(address_bits[2])==0:
             b("g")
             b("f")
             b("e")
@@ -90,7 +97,7 @@ for line_bit in data:
             b("h")
             b("f")
             b("e")
-        if address_bit[3]==0:
+        if int(address_bits[3])==0:
             b("g")
             b("f")
             b("e")
@@ -98,7 +105,7 @@ for line_bit in data:
             b("h")
             b("f")
             b("e")
-        if address_bit[4]==0:
+        if int(address_bits[4])==0:
             b("g")
             b("f")
             b("e")
@@ -106,7 +113,7 @@ for line_bit in data:
             b("h")
             b("f")
             b("e")
-        if address_bit[5]==0:
+        if int(address_bits[5])==0:
             b("g")
             b("f")
             b("e")
@@ -114,7 +121,7 @@ for line_bit in data:
             b("h")
             b("f")
             b("e")
-        if address_bit[6]==0:
+        if int(address_bits[6])==0:
             b("g")
             b("f")
             b("e")
@@ -122,15 +129,13 @@ for line_bit in data:
             b("h")
             b("f")
             b("e")
-        if address_bit[7]==0:
+        if int(address_bits[7])==0:
             b("g")
             b("f")
             b("e")
         else:
             b("h")
             b("f")
-            b("e")
-        pass
         
             
 ## Memory
