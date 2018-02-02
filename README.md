@@ -2,26 +2,26 @@
 
 Custom language interpreter for custom computer.  The computer uses a custom design based of the harvard architecture.  See https://github.com/ZZcat/compiled_language/wiki for information.
 
-### Compiler:
+## Compiler:
 
-Dependencies:
+#### Dependencies:
 
    + Python 2.7 https://www.python.org/downloads/
    
    + Python 2.7 IDLE
    
-Tested on: 
+#### Tested on: 
 
    + Mac
 
-### Android programmer:
+## Android programmer:
 
-Dependencies:
+#### Dependencies:
 
    + Qpython 2 http://www.qpython.com/
    
    + Qpython kivy https://kivy.org/#home
    
-Tested on: 
+#### Tested on: 
 
    + Android
