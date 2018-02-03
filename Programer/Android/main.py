@@ -15,10 +15,14 @@ from kivy.core.audio import SoundLoader
 
 # This callback will be bound to the LED toggle and Beep button:
 def press_callback(obj):
-    try:
-        sound.play()
-    except:
-        pass
+    if obj.text == 'Open connection' or obj.text == 'OW' or obj.text == 'CE' or obj.text == 'WE':
+        sound_sys.play()
+    else:
+        if obj.state == "down":
+            sound_on.play()
+        else:
+            sound_off.play()
+            
     if obj.text == 'Open connection':
         if obj.state == "down":
             address = ('192.168.253.101', 6001)
@@ -40,7 +44,7 @@ def press_callback(obj):
             pass
     if 1:
         try:
-            if conn_open == 1:
+            if 1:
                 global conn_open
                 global conn
                 if obj.state == "down":
@@ -49,8 +53,6 @@ def press_callback(obj):
                     conn.send(obj.text+str(1))
         except:
             pass
-
-
 # This is called when the slider is updated:
 def update_speed(obj, value):
     print "update"
@@ -64,9 +66,15 @@ class MyApp(App):
             Color(.2,.2,.2,1)
             self.rect = Rectangle(size=(800,600), pos=layout.pos)
         try:
-            global sound
-            sound = SoundLoader.load('mytest.wav')
-            global sound
+            global sound_on
+            global sound_off
+            global sound_sys
+            sound_on = SoundLoader.load('on.wav')
+            sound_off = SoundLoader.load('off.wav')
+            sound_sys = SoundLoader.load('sys.wav')
+            global sound_on
+            global sound_off
+            global sound_sys
         except:
             pass
         connB = ToggleButton(text="Open connection")
