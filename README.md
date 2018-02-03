@@ -1,6 +1,5 @@
 # Compiled_language  https://github.com/ZZcat/compiled_language
-
-Custom language interpreter for custom computer.  The computer uses a custom design based of the harvard architecture.  See https://github.com/ZZcat/compiled_language/wiki for information.
+This custom compiled language interpreter is for a custom 8 bit computer based of the harvard architecture.  See https://github.com/ZZcat/compiled_language/wiki for information.
 
 ## Compiler:
 
