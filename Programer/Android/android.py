@@ -11,10 +11,14 @@ from kivy.uix.slider import Slider
 from kivy.clock import Clock
 from kivy.graphics import Color, Rectangle
 from multiprocessing.connection import Client
+from kivy.core.audio import SoundLoader
 
 # This callback will be bound to the LED toggle and Beep button:
 def press_callback(obj):
-    print("Button pressed,", obj.text)
+    try:
+        sound.play()
+    except:
+        pass
     if obj.text == 'Open connection':
         if obj.state == "down":
             address = ('192.168.253.101', 6001)
@@ -51,7 +55,6 @@ def press_callback(obj):
 def update_speed(obj, value):
     print "update"
 class MyApp(App):
-    
     def build(self):
         # Set up the layout:
         layout = GridLayout(cols=5, spacing=30, padding=30, row_default_height=150)
@@ -60,8 +63,12 @@ class MyApp(App):
         with layout.canvas.before:
             Color(.2,.2,.2,1)
             self.rect = Rectangle(size=(800,600), pos=layout.pos)
-        
-
+        try:
+            global sound
+            sound = SoundLoader.load('mytest.wav')
+            global sound
+        except:
+            pass
         connB = ToggleButton(text="Open connection")
         connB.bind(on_press=press_callback)
         
